@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frédéric GENDRE - Hygiénisme, Santé Naturelle & Vitalité à Toulon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif; 
+            scroll-behavior: smooth;
+            color: #4a5568; 
+        }
+        .hero-bg {
+            background-image: url('https://placehold.co/1200x600/d4e9d6/d4e9d6?text='); 
+            background-size: cover;
+            background-position: center;
+        }
+        .nav-active {
+            border-bottom: 2px solid #609966; 
+            font-weight: 700; 
+            color: #405d27; 
+        }
+        .mobile-menu-hidden {
+            display: none;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        }
+        .confirmation-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .encart-special {
+            background-color: #f4f4f0; 
+            border-left: 4px solid #9DC08B; 
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .page-content {
+            padding-top: 80px; 
+            margin-top: -80px; 
+        }
+        #accueil.page-content {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        .btn-primary {
+            background-color: #609966; 
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #405d27; 
+        }
+        .btn-secondary {
+            background-color: #9DC08B; 
+            color: #3a3a3a; 
+        }
+        .btn-secondary:hover {
+            background-color: #7c9f70; 
+        }
+        .text-accent { 
+            color: #405d27; 
+        }
+        .text-accent-light { 
+            color: #609966; 
+        }
+        .border-accent {
+            border-color: #9DC08B; 
+        }
+        .icon-accent {
+            color: #609966; 
+        }
+        .bg-soft-nature { 
+            background-color: #f8f8f4; 
+        }
+        .link-nature {
+            color: #609966; 
+        }
+        .link-nature:hover {
+            text-decoration: underline;
+            color: #405d27; 
+        }
+        .quote-encart { 
+            background-color: #f0fdf4; 
+            border-left: 5px solid #609966; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .quote-box-apropos {
+            background-color: #f0fdf4; 
+            border: 1px solid #a3b18a; 
+            border-left-width: 5px;
+            border-left-color: #609966; 
+            padding: 1.5rem; 
+            border-radius: 0.5rem; 
+            margin-bottom: 2rem; 
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .quote-box-apropos p {
+            font-style: italic;
+            color: #405d27; 
+            font-weight: 600; 
+        }
+        /* Les classes .section-image et .section-image-tall ne sont plus nécessaires si les images sont enlevées, 
+           mais je les laisse au cas où vous voudriez les réintroduire facilement. */
+        .section-image { 
+            height: 12rem; 
+            width: 100%;
+            object-fit: cover; 
+            border-radius: 0.375rem; 
+            margin-bottom: 1rem; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); 
+            background-color: #e5e7eb; 
+        }
+        .section-image-tall { 
+            height: 14rem; 
+            width: 100%;
+            object-fit: cover;
+            border-radius: 0.375rem;
+            margin-bottom: 1.5rem; 
+             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            background-color: #e5e7eb; 
+        }
+        .image-error-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            background-color: #f3f4f6; 
+            color: #ef4444; 
+            font-size: 0.875rem; 
+            text-align: center;
+            border: 1px dashed #d1d5db; 
+        }
+
+    </style>
+</head>
+<body class="bg-stone-100 text-gray-700">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 lg:px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="text-lg md:text-xl font-bold text-accent">
+                    <a href="#accueil" class="page-link">Frédéric GENDRE</a>
+                </div>
+                <div class="hidden md:flex flex-wrap items-center space-x-2 lg:space-x-3 text-xs lg:text-sm">
+                    <a href="#accueil" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md nav-active">Accueil</a>
+                    <a href="#apropos" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">À Propos</a>
+                    <a href="#pilierssante" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Les 5 Piliers</a>
+                    <a href="#hormese" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Hormèse</a>
+                    <a href="#services" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Gestion Stress</a>
+                    <a href="#nutrition" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Nutrition</a>
+                    <a href="#coherencecardiaque" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Cohérence Cardiaque</a>
+                    <a href="#rendezvous" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Séances</a>
+                    <a href="#contact" class="page-link nav-item text-gray-600 hover:text-accent-light px-2 py-2 rounded-md">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="mobile-menu-hidden md:hidden mt-2">
+                <a href="#accueil" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md nav-active">Accueil</a>
+                <a href="#apropos" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">À Propos</a>
+                <a href="#pilierssante" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Les 5 Piliers</a>
+                <a href="#hormese" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Hormèse</a>
+                <a href="#services" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Gestion Stress</a>
+                <a href="#nutrition" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Nutrition</a>
+                <a href="#coherencecardiaque" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Cohérence Cardiaque</a>
+                <a href="#rendezvous" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Séances</a>
+                <a href="#contact" class="page-link nav-item block text-gray-600 hover:text-accent-light px-3 py-2 rounded-md">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="container mx-auto px-4 md:px-6 py-8">
+
+        <section id="accueil" class="page-content min-h-screen">
+            <div class="hero-bg rounded-lg shadow-lg p-6 py-12 sm:p-8 sm:py-16 md:p-12 md:py-20 lg:p-16 lg:py-24 flex flex-col items-center justify-center text-center" style="min-height: 60vh;">
+                <h1 class="text-2xl xxs:text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 leading-snug sm:leading-tight" style="color: #386641;">
+                    Votre Santé, Votre Pouvoir.
+                </h1>
+                <p class="text-sm xxs:text-base xs:text-lg sm:text-xl md:text-xl lg:text-2xl mb-6 sm:mb-8 max-w-xl md:max-w-2xl leading-relaxed sm:leading-loose" style="color: #386641;">
+                    Redevenez acteur de votre bien-être grâce à une approche naturelle et globale à Toulon.
+                </p>
+                <a href="#apropos" class="page-link btn-primary font-bold py-3 px-6 rounded-lg text-base sm:text-lg transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">Explorer mon accompagnement</a>
+            </div>
+
+            <div class="my-8 lg:my-12 px-4">
+                <div class="max-w-3xl mx-auto p-6 rounded-lg quote-encart">
+                    <blockquote class="text-center">
+                        <p class="text-xl md:text-2xl italic text-accent leading-relaxed font-semibold">
+                            "Tout par évolution, rien par révolution."
+                        </p>
+                        <footer class="mt-3 text-md text-gray-600">
+                            — Eugène Pelletan
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+
+             <div class="mt-12 grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center card">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 icon-accent mx-auto mb-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-accent">Vitalité & Hormèse</h3>
+                    <p class="text-gray-600">Boostez votre résilience et votre énergie grâce aux principes de l'hormèse.</p>
+                     <a href="#hormese" class="page-link link-nature font-semibold mt-2 inline-block">Découvrir l'hormèse →</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center card">
+                     <svg class="w-16 h-16 icon-accent mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" /> </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-accent">Équilibre & 5 Piliers</h3>
+                    <p class="text-gray-600">Une approche globale pour harmoniser mouvement, sommeil, nutrition, souffle et mindset.</p>
+                    <a href="#pilierssante" class="page-link link-nature font-semibold mt-2 inline-block">Explorer les 5 piliers →</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center card">
+                    <svg class="w-16 h-16 icon-accent mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /> </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-accent">Sérénité & Respiration</h3>
+                    <p class="text-gray-600">Maîtrisez votre stress et apaisez votre mental avec des techniques respiratoires.</p>
+                    <a href="#services" class="page-link link-nature font-semibold mt-2 inline-block">Gérer mon stress →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="apropos" class="page-content min-h-screen py-12 bg-soft-nature rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-accent">À Propos de Moi : Ma Vision de la Santé Naturelle</h2>
+            <div class="max-w-4xl mx-auto bg-white p-8 md:p-10 rounded-lg shadow-xl">
+                
+                <div class="quote-box-apropos">
+                    <p class="text-xl md:text-2xl">
+                        "Aucun livre de recettes de cuisine n'a jamais nourri celui qui ne se met pas à la tâche pour cuisiner"
+                    </p>
+                </div>
+
+                <div class="text-center md:text-left mb-8">
+                    <h3 class="text-2xl lg:text-3xl font-semibold text-gray-800 mb-4">Je suis Frédéric GENDRE, Naturopathe Hygiéniste</h3>
+                    <p class="text-lg text-gray-600 mb-4 leading-relaxed">
+                        Passionné depuis toujours par les incroyables capacités du corps humain à maintenir et retrouver son équilibre, ma mission est de vous accompagner sur le chemin d'une santé pleine et souveraine.
+                        Je suis diplômé de l'école de naturopathie hygiéniste du Dr. Raphaël PEREZ, une formation qui a profondément ancré ma conviction en la <strong class="text-accent-light">force vitale innée</strong> (`vis medicatrix naturae`) présente en chacun de nous.
+                    </p>
+                </div>
+                
+                <h4 class="text-2xl font-semibold text-accent-light mt-8 mb-4">L'Hygiénisme : Une Approche Respectueuse du Vivant</h4>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">
+                    L'hygiénisme, tel que je le conçois et le pratique, n'est pas une simple méthode, mais une véritable philosophie de vie qui repose sur la compréhension et le respect des lois naturelles régissant la santé. Plutôt que de se focaliser sur la suppression des symptômes, l'approche hygiéniste cherche à :
+                </p>
+                <ul class="list-disc list-inside text-lg text-gray-600 mb-6 space-y-2 leading-relaxed pl-4">
+                    <li><strong>Identifier et éliminer les causes profondes</strong> des déséquilibres (surcharges toxiniques, carences, stress chronique, etc.).</li>
+                    <li><strong>Créer des conditions optimales</strong> pour permettre au corps d'exprimer pleinement son potentiel d'auto-régulation et d'auto-réparation.</li>
+                    <li><strong>Responsabiliser chaque individu</strong> en lui donnant les clés pour devenir l'acteur principal de sa santé.</li>
+                </ul>
+                <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                    Cette vision s'articule autour de plusieurs thèmes fondamentaux, qui sont au cœur de mon accompagnement. L'exploration et l'application de ces principes sont personnalisées lors de nos <a href="#rendezvous" class="page-link link-nature font-semibold">séances d'accompagnement</a>, et vous trouverez plus de détails sur chaque aspect dans les sections dédiées de ce site :
+                </p>
+
+                <div class="space-y-4">
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        🌿 **Une alimentation vivante et adaptée :** Le pilier central. Je vous guide vers une <a href="#nutrition" class="page-link link-nature font-semibold">nutrition hygiéniste</a>, riche en aliments bruts, complets et spécifiques à notre nature, en respectant les bonnes combinaisons pour une digestion et une assimilation optimales. C'est la base du pilier "Nutrition" de <a href="#pilierssante" class="page-link link-nature font-semibold">mon approche des 5 piliers</a>.
+                    </p>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        ☀️ **L'hygiène nerveuse et la gestion du stress :** Un système nerveux équilibré est crucial. Nous explorons ensemble des techniques de <a href="#services" class="page-link link-nature font-semibold">gestion du stress</a>, notamment par le souffle conscient (<a href="#coherencecardiaque" class="page-link link-nature font-semibold">cohérence cardiaque</a>), qui correspond au pilier "Souffle" et "Mindset" des <a href="#pilierssante" class="page-link link-nature font-semibold">5 piliers</a>.
+                    </p>
+                     <p class="text-lg text-gray-600 leading-relaxed">
+                        🌙 **Le repos et la régénération :** Un sommeil de qualité et des temps de repos adéquats sont indispensables. C'est le pilier "Sommeil" que nous explorons dans <a href="#pilierssante" class="page-link link-nature font-semibold">l'approche des 5 piliers</a>.
+                    </p>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        🏃 **Le mouvement et l'activité physique :** Le corps est fait pour bouger. Nous trouvons ensemble des formes de mouvement adaptées pour stimuler votre vitalité, en lien avec le pilier "Mouvement" des <a href="#pilierssante" class="page-link link-nature font-semibold">5 piliers</a>.
+                    </p>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        💪 **La stimulation des capacités adaptatives (Hormèse) :** J'intègre les principes de <a href="#hormese" class="page-link link-nature font-semibold">l'hormèse</a> pour renforcer votre résilience et optimiser vos fonctions physiologiques de manière naturelle.
+                    </p>
+                </div>
+
+                <p class="text-lg text-gray-600 mt-8 leading-relaxed">
+                    Mon rôle est de vous éduquer, de vous motiver et de vous fournir les outils pratiques pour intégrer ces principes hygiénistes dans votre vie, afin que vous puissiez non seulement retrouver un bien-être optimal, mais aussi le maintenir sur le long terme. N'hésitez pas à <a href="#contact" class="page-link link-nature font-semibold">me contacter</a> pour toute question ou pour débuter votre parcours.
+                </p>
+                <div class="text-center mt-10">
+                    <a href="#rendezvous" class="page-link btn-primary font-bold py-3 px-6 rounded-lg text-lg transition duration-300">Découvrir mes accompagnements</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="pilierssante" class="page-content min-h-screen py-12 rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">Les 5 Piliers Fondamentaux de Votre Santé Holistique</h2>
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                <p class="text-lg text-gray-600 mb-8 text-center leading-relaxed">
+                    Pour une santé durable et une vitalité optimale, j'aborde le bien-être à travers 5 piliers interconnectés. Mon accompagnement vise à renforcer chacun d'eux pour vous permettre de retrouver votre équilibre naturel et de devenir souverain de votre santé.
+                </p>
+                <div class="space-y-10">
+                    <div class="encart-special">
+                        <h3 class="text-2xl font-semibold text-accent-light mb-3">1. Le Mouvement : L'Énergie de la Vie</h3>
+                        <p class="text-gray-600 mb-2 leading-relaxed">Bien plus qu'une simple activité physique, le mouvement est essentiel à la vie. Il stimule la circulation, renforce le corps, libère les tensions et éclaircit l'esprit. Il est fondamental pour maintenir notre structure physique et notre dynamisme intérieur.</p>
+                        <p class="text-gray-600 leading-relaxed"><strong>Mon approche :</strong> Ensemble, nous identifions les formes de mouvement qui vous conviennent le mieux, celles qui vous apportent joie et énergie, pour les intégrer durablement et avec plaisir dans votre quotidien.</p>
+                    </div>
+                    <div class="encart-special">
+                        <h3 class="text-2xl font-semibold text-accent-light mb-3">2. Le Sommeil Réparateur : Votre Allié Régénération</h3>
+                        <p class="text-gray-600 mb-2 leading-relaxed">Un sommeil de qualité est la pierre angulaire de la récupération physique et mentale. C'est durant ces précieuses heures que le corps se répare, que le cerveau consolide les apprentissages et que les hormones se régulent.</p>
+                        <p class="text-gray-600 leading-relaxed"><strong>Mon approche :</strong> Je vous aide à comprendre les mécanismes d'un bon sommeil et à mettre en place des stratégies pour optimiser votre environnement et vos habitudes, favorisant ainsi des nuits réellement réparatrices.</p>
+                    </div>
+                    <div class="encart-special">
+                        <h3 class="text-2xl font-semibold text-accent-light mb-3">3. La Nutrition Vivante : Le Carburant de Votre Bien-être</h3>
+                        <p class="text-gray-600 mb-2 leading-relaxed">L'alimentation est le carburant qui nourrit chacune de vos cellules. Une nutrition adaptée, vivante et respectueuse de votre physiologie est cruciale pour votre niveau d'énergie, votre clarté mentale et votre santé globale.</p>
+                        <p class="text-gray-600 leading-relaxed"><strong>Mon approche :</strong> Basée sur les principes de l'hygiénisme, je vous accompagne vers un rééquilibrage alimentaire personnalisé, privilégiant les aliments naturels et soutenant les capacités d'autoguérison de votre corps. <a href="#nutrition" class="page-link link-nature font-semibold">En savoir plus sur mon approche nutritionnelle.</a></p>
+                    </div>
+                    <div class="encart-special">
+                        <h3 class="text-2xl font-semibold text-accent-light mb-3">4. Le Souffle Conscient : Votre Ancre Intérieure</h3>
+                        <p class="text-gray-600 mb-2 leading-relaxed">Votre respiration est un outil puissant, toujours disponible, pour influencer votre état physiologique et émotionnel. Un souffle conscient permet de gérer le stress, d'améliorer l'oxygénation et de cultiver le calme intérieur.</p>
+                        <p class="text-gray-600 leading-relaxed"><strong>Mon approche :</strong> Je vous enseigne des techniques respiratoires simples et efficaces, comme la <a href="#coherencecardiaque" class="page-link link-nature font-semibold">cohérence cardiaque</a>, pour apaiser votre mental, dynamiser votre corps et mieux naviguer les défis du quotidien. <a href="#services" class="page-link link-nature font-semibold">Découvrez mes approches de gestion du stress.</a></p>
+                    </div>
+                    <div class="encart-special">
+                        <h3 class="text-2xl font-semibold text-accent-light mb-3">5. Le Mindset : La Force de Votre Esprit</h3>
+                        <p class="text-gray-600 mb-2 leading-relaxed">Votre état d'esprit, vos pensées et vos émotions ont un impact direct sur votre bien-être. Cultiver un mindset positif, résilient et orienté vers la croissance est essentiel pour surmonter les obstacles et s'épanouir.</p>
+                        <p class="text-gray-600 leading-relaxed"><strong>Mon approche :</strong> Je vous accompagne pour développer une meilleure conscience de vos schémas de pensée, renforcer votre mental, cultiver la gratitude et adopter une perspective qui soutient votre santé et vos objectifs de vie.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="#contact" class="page-link btn-primary font-bold py-3 px-6 rounded-lg text-lg transition duration-300">Renforçons ensemble ces piliers pour votre santé</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="hormese" class="page-content min-h-screen py-12 bg-soft-nature rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">L'Hormèse : Stimulez Votre Corps, Révélez Votre Vitalité</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                <p class="text-gray-600 text-lg mb-4 leading-relaxed mt-6">
+                    L'<strong>hormèse</strong> est un principe biologique fascinant selon lequel l'exposition à un stress de faible intensité, bien dosé et ponctuel, peut déclencher des réponses adaptatives bénéfiques dans l'organisme. Loin d'être néfaste, ce "bon stress" stimule nos mécanismes de défense et de réparation, nous rendant plus forts et plus résilients.
+                </p>
+                <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                    Pensez-y comme à un entraînement : un effort modéré renforce le muscle, tandis qu'un excès l'épuise. L'hormèse fonctionne sur ce même principe d'adaptation positive.
+                </p>
+
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-accent-light">Mon Accompagnement aux Techniques d'Hormèse</h3>
+                <p class="text-gray-600 text-lg mb-4 leading-relaxed">
+                    Je vous accompagne pour intégrer les principes de l'hormèse de manière sécurisée, progressive et personnalisée dans votre quotidien. L'objectif n'est pas de vous pousser au-delà de vos limites de manière déraisonnable, mais de trouver le juste niveau de stimulation pour activer les capacités régénératrices de votre corps.
+                </p>
+                <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                    Ensemble, nous pouvons explorer diverses techniques hormétiques, telles que :
+                </p>
+                <ul class="list-disc list-inside text-gray-600 space-y-3 mb-6 text-lg leading-relaxed pl-4">
+                    <li>
+                        <strong>L'exposition volontaire au froid :</strong> Douches froides progressives, bains froids... pour stimuler le système immunitaire, améliorer la circulation, réduire l'inflammation et renforcer le mental.
+                    </li>
+                    <li>
+                        <strong>Le jeûne intermittent :</strong> Périodes de restriction alimentaire planifiées pour favoriser la régénération cellulaire (autophagie), améliorer la sensibilité à l'insuline et potentiellement la longévité.
+                    </li>
+                    <li>
+                        <strong>Les exercices respiratoires spécifiques :</strong> Techniques comme celles inspirées de Wim Hof ou d'autres pratiques d'hyperventilation/hypoventilation contrôlées pour augmenter l'énergie, gérer le stress et moduler le système nerveux.
+                    </li>
+                    <li>
+                        <strong>L'exercice physique adapté :</strong> Des efforts intenses mais courts, ou des pratiques qui sortent de la zone de confort habituelle, pour stimuler l'adaptation musculaire, cardiovasculaire et neurologique.
+                    </li>
+                </ul>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                    Chaque technique sera abordée avec précaution, en tenant compte de votre état de santé actuel et de vos objectifs. L'hormèse est un formidable levier pour optimiser votre vitalité, votre clarté mentale et votre bien-être général.
+                </p>
+                <div class="text-center mt-8">
+                    <a href="#contact" class="page-link btn-secondary font-bold py-3 px-6 rounded-lg text-lg transition duration-300">Prêt(e) à explorer le pouvoir de l'hormèse ?</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="page-content min-h-screen py-12 rounded-lg my-12">
+             <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">Mes Approches pour la Gestion du Stress par la Respiration</h2>
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg card">
+                    <h3 class="text-2xl font-semibold mb-3 text-accent-light mt-4">Pour les Entreprises : Cultivez la Sérénité et la Performance</h3>
+                    <p class="text-gray-600 mb-2 leading-relaxed">J'interviens au sein de votre organisation pour aider vos équipes à mieux gérer le stress et à améliorer leur bien-être au travail (QVT). Mes ateliers et formations sur mesure intègrent des techniques de respiration, dont la <a href="#coherencecardiaque" class="page-link link-nature font-semibold">cohérence cardiaque</a>, pour :</p>
+                    <ul class="list-disc list-inside text-gray-600 mb-4 space-y-1 leading-relaxed pl-4">
+                        <li>Réduire le stress et l'anxiété professionnels.</li>
+                        <li>Augmenter la concentration et la productivité.</li>
+                        <li>Améliorer la cohésion d'équipe et la communication.</li>
+                        <li>Prévenir l'épuisement professionnel (burn-out).</li>
+                    </ul>
+                    <a href="#contact" class="page-link link-nature font-semibold">Demander un devis personnalisé →</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card">
+                    <h3 class="text-2xl font-semibold mb-3 text-accent-light mt-4">Pour les Particuliers : Maîtrisez votre Souffle, Transformez votre Vie</h3>
+                    <p class="text-gray-600 mb-2 leading-relaxed">En séances individuelles, apprenez à maîtriser des techniques de respiration simples et puissantes pour gérer efficacement votre stress au quotidien. La <a href="#coherencecardiaque" class="page-link link-nature font-semibold">cohérence cardiaque</a> et d'autres de mes méthodes vous aideront à :</p>
+                    <ul class="list-disc list-inside text-gray-600 mb-4 space-y-1 leading-relaxed pl-4">
+                        <li>Diminuer l'impact du stress sur votre santé.</li>
+                        <li>Améliorer la qualité de votre sommeil.</li>
+                        <li>Mieux gérer vos émotions.</li>
+                        <li>Augmenter votre vitalité et votre clarté mentale.</li>
+                    </ul>
+                    <a href="#rendezvous" class="page-link link-nature font-semibold">Prendre une séance →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="nutrition" class="page-content min-h-screen py-12 bg-soft-nature rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">Mon Approche de la Nutrition : L'Hygiénisme</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                 <div class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
+                    <div class="md:w-full"> <p class="text-gray-600 text-lg mb-4 leading-relaxed">
+                            Ma vision de la nutrition est profondément ancrée dans les principes de l'<strong>hygiénisme</strong>. Diplômé en naturopathie de l'<strong>école de naturopathie hygiéniste du Dr. Raphaël PEREZ</strong>, j'ai été formé à une approche qui respecte les lois naturelles du vivant et la capacité intrinsèque du corps à s'auto-réguler et s'auto-guérir.
+                        </p>
+                        <p class="text-gray-600 text-lg leading-relaxed">
+                           L'hygiénisme met l'accent sur une alimentation composée d'aliments bruts, naturels, spécifiques à notre physiologie, et sur l'importance de bonnes combinaisons alimentaires pour optimiser la digestion et l'assimilation des nutriments. C'est l'un des <a href="#pilierssante" class="page-link link-nature font-semibold">5 piliers fondamentaux</a> de ma pratique.
+                        </p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-accent-light">Les Piliers de ma Pratique Nutritionnelle</h3>
+                <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6 text-lg leading-relaxed pl-4">
+                    <li><strong>Alimentation vivante et individualisée :</strong> Privilégier les aliments complets, frais, de saison, et adapter l'alimentation à vos besoins uniques et à votre vitalité.</li>
+                    <li><strong>Soutien des émonctoires :</strong> Favoriser les mécanismes naturels de détoxination du corps pour maintenir un terrain sain.</li>
+                    <li><strong>Rééquilibrage global :</strong> Considérer l'alimentation comme un des piliers de la santé, en synergie avec la gestion du stress, le sommeil, l'activité physique et l'équilibre psycho-émotionnel.</li>
+                    <li><strong>Éducation et autonomie :</strong> Vous transmettre les clés pour comprendre les besoins de votre corps et faire des choix alimentaires éclairés et durables.</li>
+                </ul>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                    Mon objectif est de vous accompagner vers un rééquilibrage alimentaire en douceur, sans frustration, pour que vous retrouviez énergie, vitalité et un rapport apaisé avec votre alimentation. Il s'agit de mettre en place des pratiques préventives pour placer votre santé au centre de votre vie.
+                </p>
+                <div class="text-center mt-8">
+                    <a href="#contact" class="page-link btn-primary font-bold py-3 px-6 rounded-lg text-lg transition duration-300">Parlons de votre alimentation</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="coherencecardiaque" class="page-content min-h-screen py-12 rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">La Cohérence Cardiaque : Votre Outil Anti-Stress</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                    <div class="md:w-full"> <p class="text-gray-600 text-lg mb-4 leading-relaxed">
+                            La <strong>cohérence cardiaque</strong> est une pratique respiratoire simple et scientifiquement validée qui permet de réguler la variabilité du rythme cardiaque. En adoptant une respiration contrôlée et rythmée (typiquement 6 cycles respiratoires par minute pendant 5 minutes), vous influencez positivement votre système nerveux autonome. Elle fait partie intégrante du pilier <a href="#pilierssante" class="page-link link-nature font-semibold">"Souffle Conscient"</a>.
+                        </p>
+                        <p class="text-gray-600 text-lg mb-4 leading-relaxed">
+                            Cette technique favorise un état d'équilibre physiologique et émotionnel, agissant comme un véritable chef d'orchestre pour harmoniser les fonctions vitales de l'organisme.
+                        </p>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-semibold mt-8 mb-4 text-accent-light">Les Bienfaits de la Cohérence Cardiaque</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">Au niveau physiologique :</h4>
+                        <ul class="list-disc list-inside text-gray-600 space-y-1 leading-relaxed pl-4">
+                            <li>Baisse du cortisol (hormone du stress).</li>
+                            <li>Augmentation de la DHEA (hormone anti-vieillissement).</li>
+                            <li>Renforcement du système immunitaire.</li>
+                            <li>Meilleure gestion de la tension artérielle.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">Au niveau émotionnel et mental :</h4>
+                        <ul class="list-disc list-inside text-gray-600 space-y-1 leading-relaxed pl-4">
+                            <li>Réduction du stress et de l'anxiété.</li>
+                            <li>Amélioration de la concentration et de la clarté mentale.</li>
+                            <li>Prise de décision facilitée.</li>
+                            <li>Augmentation du calme intérieur et du lâcher-prise.</li>
+                            <li>Meilleure gestion des émotions.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="mt-6 text-center text-gray-600 leading-relaxed">
+                    La pratique régulière de la cohérence cardiaque, souvent résumée par la règle du "365" (3 fois par jour, 6 respirations par minute, pendant 5 minutes), peut transformer durablement votre bien-être.
+                </p>
+                 <div class="text-center mt-8">
+                    <a href="#rendezvous" class="page-link btn-primary font-bold py-3 px-6 rounded-lg text-lg transition duration-300">Apprendre la Cohérence Cardiaque</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="rendezvous" class="page-content min-h-screen py-12 bg-soft-nature rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">Réserver une Séance d'Accompagnement Holistique</h2>
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                    Prêt(e) à investir dans votre santé globale ? Pour une séance individuelle (gestion du stress, nutrition hygiéniste, hormèse, renforcement des 5 piliers) ou pour organiser un atelier en entreprise, contactez-moi :
+                </p>
+                <ul class="list-disc list-inside space-y-3 mb-8 text-gray-600 leading-relaxed pl-4">
+                    <li>
+                        <strong>Par téléphone :</strong> Appelez-moi au <a href="tel:0677485354" class="link-nature font-semibold">06 77 48 53 54</a>.
+                    </li>
+                    <li>
+                        <strong>Par email :</strong> Envoyez votre demande à <a href="mailto:frederic.gendre@ik.me" class="link-nature font-semibold">frederic.gendre@ik.me</a>.
+                    </li>
+                </ul>
+                <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                    Nous discuterons ensemble de vos besoins pour vous proposer l'accompagnement le plus adapté à votre situation et à vos objectifs.
+                </p>
+                <div class="bg-lime-50 border-l-4 border-accent p-4 rounded-md"> <h4 class="font-semibold text-accent">Informations utiles :</h4>
+                    <ul class="list-disc list-inside text-sm text-lime-700 mt-2 space-y-1 leading-relaxed pl-4">
+                        <li>Les séances individuelles durent environ 1 heure à 1h30.</li>
+                        <li>Les ateliers en entreprise sont personnalisables (durée, contenu).</li>
+                        <li>En cas d'empêchement pour une séance individuelle, merci de me prévenir au moins 24h à l'avance.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="page-content min-h-screen py-12 rounded-lg my-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-accent">Me Contacter</h2>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold mb-4 text-accent-light">Mes Coordonnées</h3>
+                    <p class="text-gray-600 mb-2 leading-relaxed">
+                        <strong>Frédéric GENDRE</strong><br>
+                        636 Avenue Bellevue<br>
+                        83200 Toulon, France
+                    </p>
+                    <p class="text-gray-600 mb-2 leading-relaxed">
+                        <strong>Téléphone :</strong> <a href="tel:0677485354" class="link-nature font-semibold">06 77 48 53 54</a>
+                    </p>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        <strong>Email :</strong> <a href="mailto:frederic.gendre@ik.me" class="link-nature font-semibold">frederic.gendre@ik.me</a>
+                    </p>
+                    <h4 class="font-semibold mt-6 mb-2 text-gray-700">Horaires de consultation et contact :</h4>
+                    <ul class="text-gray-600 text-sm leading-relaxed">
+                        <li>Lundi - Vendredi : 9h00 - 18h00 (Consultations sur rendez-vous)</li>
+                        <li>Samedi - Dimanche : Fermé</li>
+                    </ul>
+                     <div class="mt-6 h-72 rounded-lg overflow-hidden shadow-md">
+                        <iframe
+                            src="https://maps.google.com/maps?q=636%20Avenue%20Bellevue%2C%2083200%20Toulon&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Carte de localisation au 636 Avenue Bellevue, 83200 Toulon">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold mb-4 text-accent-light">Envoyez-moi un message</h3>
+                    <form id="contactForm">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-semibold mb-2">Nom complet</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email_form" class="block text-gray-700 font-semibold mb-2">Adresse Email</label>
+                            <input type="email" id="email_form" name="email_form" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        </div>
+                         <div class="mb-4">
+                            <label for="entity" class="block text-gray-700 font-semibold mb-2">Vous êtes :</label>
+                            <select id="entity" name="entity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <option value="particulier">Un Particulier</option>
+                                <option value="entreprise">Une Entreprise</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="subject" class="block text-gray-700 font-semibold mb-2">Sujet de votre demande</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">Votre message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full btn-primary font-bold py-3 px-6 rounded-lg transition duration-300">
+                            Envoyer le Message
+                        </button>
+                    </form>
+                    <div id="confirmationMessage" class="confirmation-message bg-green-600 text-white p-4 rounded-lg shadow-md">
+                        Votre message m'a bien été envoyé ! Je vous répondrai bientôt.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>© <span id="currentYear"></span> Frédéric GENDRE. Tous droits réservés.</p>
+            <p class="text-sm mt-2">Votre partenaire pour une santé globale et durable.</p>
+            <div class="mt-4 text-xs sm:text-sm">
+                <a href="#accueil" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">Accueil</a> |
+                <a href="#apropos" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">À Propos</a> |
+                <a href="#pilierssante" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">5 Piliers</a> |
+                <a href="#hormese" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">Hormèse</a> |
+                <a href="#services" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">Stress</a> |
+                <a href="#nutrition" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">Nutrition</a> |
+                <a href="#contact" class="page-link text-gray-400 hover:text-white px-1 sm:px-2">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const nav = document.querySelector('nav'); 
+        let navHeight = nav.offsetHeight; 
+
+        window.addEventListener('resize', () => {
+            navHeight = nav.offsetHeight;
+        });
+
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('mobile-menu-hidden');
+        });
+
+        const pageLinks = document.querySelectorAll('.page-link');
+        const navItems = document.querySelectorAll('.nav-item');
+        const pageContents = document.querySelectorAll('.page-content');
+
+        function showPage(targetId, isInitialLoad = false) {
+            pageContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                
+                let scrollPosition = 0;
+                if (targetId !== 'accueil') {
+                    const elementTop = targetSection.getBoundingClientRect().top + window.pageYOffset;
+                    scrollPosition = elementTop - navHeight - 20; 
+                }
+                
+                if (isInitialLoad && window.location.hash) {
+                     window.scrollTo({ 
+                        top: scrollPosition, 
+                        behavior: "auto" 
+                    });
+                } else {
+                    window.scrollTo({ 
+                        top: scrollPosition, 
+                        behavior: "smooth" 
+                    });
+                }
+
+
+            } else {
+                console.warn("Section cible non trouvée :", targetId);
+            }
+
+            navItems.forEach(item => {
+                item.classList.remove('nav-active');
+                item.style.color = ''; 
+                if (item.getAttribute('href') === `#${targetId}`) {
+                    item.classList.add('nav-active');
+                }
+            });
+
+            if (!mobileMenu.classList.contains('mobile-menu-hidden')) {
+                mobileMenu.classList.add('mobile-menu-hidden');
+            }
+        }
+
+        pageLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                const targetId = link.getAttribute('href').substring(1); 
+                
+                showPage(targetId, false); 
+                
+                if (history.pushState) {
+                    history.pushState(null, null, `#${targetId}`);
+                } else {
+                    window.location.hash = `#${targetId}`;
+                }
+            });
+        });
+        
+        function loadInitialPage() {
+            navHeight = nav.offsetHeight; 
+            let targetId = window.location.hash.substring(1);
+            const validSections = Array.from(pageContents).map(pc => pc.id);
+            
+            if (!targetId || !validSections.includes(targetId)) {
+                targetId = 'accueil'; 
+            }
+            showPage(targetId, true); 
+        }
+
+        window.addEventListener('load', loadInitialPage);
+        
+        window.addEventListener('popstate', function() {
+            loadInitialPage();
+        });
+
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const contactForm = document.getElementById('contactForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log('Formulaire soumis (simulation)');
+                confirmationMessage.textContent = "Votre message m'a bien été envoyé ! Je vous répondrai bientôt.";
+                confirmationMessage.style.display = 'block';
+                contactForm.reset(); 
+                setTimeout(() => {
+                    confirmationMessage.style.display = 'none';
+                }, 5000); 
+            });
+        }
+    </script>
+</body>
+</html>
